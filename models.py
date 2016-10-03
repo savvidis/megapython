@@ -1,4 +1,5 @@
 from pymongo import MongoClient
+from mongokat import Collection, Document
 
 client = MongoClient('mongodb://mongo:27017/sourcelair')
 
@@ -19,4 +20,21 @@ print spyros
 if spyros is None:
     db.users.insert(myrecord)
 
-print db.users.find({})
+
+
+class User(Document):
+
+    @property
+    def is_authenticated(self):
+        return True
+
+    @property
+    def is_active(self):
+        return True
+
+    @property
+    def is_anonymous(self):
+        return False
+
+class UserCollection:
+    document_class = User
