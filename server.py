@@ -1,6 +1,7 @@
 import os
-from flask.ext.login import (LoginManager)
-from flask.ext.openid import OpenID
+from flask_login import (LoginManager)
+from flask_openid import OpenID
+from models import db, User
 
 from config import basedir
 
@@ -15,6 +16,10 @@ from models import *
 lm = LoginManager()
 lm.init_app(app)
 lm.login_view = 'login'
+
+@lm.user_loader
+def load_user(username):
+    return db.users.find_one({"_id": username})
 
 oid = OpenID(app, os.path.join(basedir, 'tmp'))
 

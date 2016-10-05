@@ -1,6 +1,14 @@
 import os
+from pymongo import MongoClient
+
 WTF_CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
+DB_NAME = 'mega'
+
+DATABASE = MongoClient()[DB_NAME]
+POSTS_COLLECTION = DATABASE.posts
+USERS_COLLECTION = DATABASE.users
+SETTINGS_COLLECTION = DATABASE.settings
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 OPENID_PROVIDERS = [
